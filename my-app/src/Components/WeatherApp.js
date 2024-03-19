@@ -33,7 +33,7 @@ const WeatherDashboard = () => {
   };
 
   const currentWeather = (city) => {
-    const APIKey = "a0aca8a89948154a4182dcecc780b513";
+    const APIKey = "84b79da5e5d7c92085660485702f4ce8";
     const queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${APIKey}`;
     fetch(queryURL)
       .then((response) => response.json())
@@ -56,8 +56,8 @@ const WeatherDashboard = () => {
   };
 
   const UVIndex = (ln, lt) => {
-    const APIKey = "a0aca8a89948154a4182dcecc780b513";
-    const uvqURL = `https://api.openweathermap.org/data/2.5/uvi?appid=${APIKey}&lat=${lt}&lon=${ln}`;
+    const APIKey = "84b79da5e5d7c92085660485702f4ce8";
+    const uvqURL = `https://api.openweathermap.org/data/2.5/uvi/forecast?lat=${lt}&lon=${ln}&appid=${APIKey}&cnt=1`;
     fetch(uvqURL)
       .then((response) => response.json())
       .then((data) => {
@@ -67,7 +67,7 @@ const WeatherDashboard = () => {
   };
 
   const forecast = (cityId) => {
-    const APIKey = "a0aca8a89948154a4182dcecc780b513";
+    const APIKey = "84b79da5e5d7c92085660485702f4ce8";
     const queryForecastURL = `https://api.openweathermap.org/data/2.5/forecast?id=${cityId}&appid=${APIKey}`;
     fetch(queryForecastURL)
       .then((response) => response.json())
@@ -94,13 +94,13 @@ const WeatherDashboard = () => {
   };
 
   return (
-    <div>
+    <div className="mobile-responsive">
       <div className="bg-gray-900 text-white py-4 text-center">
         <h1 className="text-3xl font-bold">Weather Dashboard</h1>
       </div>
       <div className="container mx-auto">
-        <div className="flex">
-          <div className="w-1/3 bg-gray-100 p-4">
+        <div className="flex flex-col md:flex-row">
+          <div className="md:w-1/3 bg-gray-100 p-4">
             <h2 className="text-lg font-semibold mb-4">Search for a City:</h2>
             <div className="flex">
               <input type="text" className="flex-1 border border-gray-300 rounded-l py-2 px-4 focus:outline-none" placeholder="Enter city name" value={searchCity} onChange={(e) => setSearchCity(e.target.value)} />
@@ -113,19 +113,19 @@ const WeatherDashboard = () => {
               ))}
             </ul>
           </div>
-          <div className="w-2/3 p-4">
-            <div className="bg-gray-100 border border-gray-300 rounded p-4">
+          <div className="md:w-2/3 p-4">
+            <div className="bg-gray-100 border border-gray-300 rounded p-4 mb-4">
               <h2 className="text-lg font-semibold mb-4" id="current-city">{currentCity}</h2>
               <p>Temperature: <span id="temperature">{currentTemperature}</span></p>
               <p>Humidity: <span id="humidity">{currentHumidity}</span></p>
               <p>Wind Speed: <span id="wind-speed">{currentWSpeed}</span></p>
               <p>UV index: <span id="uv-index">{currentUvindex}</span></p>
             </div>
-            <div className="mt-4">
+            <div>
               <h2 className="text-lg font-semibold mb-4">5-Day Forecast:</h2>
-              <div className="flex">
+              <div className="flex flex-wrap">
                 {forecastData.map((dayData, index) => (
-                  <div key={index} className="w-1/5 bg-blue-500  border border-gray-300 rounded p-4 mr-2">
+                  <div key={index} className="w-full md:w-1/5 bg-blue-500  border border-gray-300 rounded p-4 mb-2 md:mr-2">
                     <p>Date: <span>{new Date(dayData.dt * 1000).toLocaleDateString()}</span></p>
                     <p>Temp: <span>{convertToFahrenheit(dayData.main.temp)}</span></p>
                     <p>Humidity: <span>{dayData.main.humidity}</span></p>
